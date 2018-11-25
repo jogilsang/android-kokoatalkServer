@@ -16,7 +16,7 @@ public class MainClass {
 	private ServerSocket server;
 	public static int serverPort = 30000;
 	
-	//»ç¿ëÀÚ °´Ã¼µéÀ» °ü¸®ÇÏ´Â ArrayList
+	//ì‚¬ìš©ì ê°ì²´ë“¤ì„ ê´€ë¦¬í•˜ëŠ” ArrayList
 	ArrayList<UserClass> user_list;
 	
 	public static void main(String[] args) throws UnknownHostException {
@@ -24,19 +24,19 @@ public class MainClass {
 		
 	    ServerIP = InetAddress.getLocalHost().getHostAddress();
 		
-		// ¼­¹ö ¾ÆÀÌÇÇ Ç¥½Ã
+		// ì„œë²„ ì•„ì´í”¼ í‘œì‹œ
 		System.out.println(ServerIP + ":" + String.valueOf(serverPort));
 		
 		new MainClass();
 	}	
-    //¸ŞÀÎ¸Ş¼Òµå°¡ staticÀ¸·Î µÇ¾îÀÖ±â ¶§¹®¿¡ ´Ù¸¥°ÍµéÀ» ´Ù static À¸·Î ÇÏ±â ±ÍÂú±â ¶§¹®¿¡
-	// µû·Î »ı¼ºÀÚ¸¦ ¸¸µé¾î¼­ ÁøÇà - > ¸ŞÀÎ¿¡¼­´Â È£ÃâÁ¤µµÀÇ ±â´É¸¸ ±¸ÇöÇÏ´Â°Ô ÁÁ´Ù.
+    //ë©”ì¸ë©”ì†Œë“œê°€ staticìœ¼ë¡œ ë˜ì–´ìˆê¸° ë•Œë¬¸ì— ë‹¤ë¥¸ê²ƒë“¤ì„ ë‹¤ static ìœ¼ë¡œ í•˜ê¸° ê·€ì°®ê¸° ë•Œë¬¸ì—
+	// ë”°ë¡œ ìƒì„±ìë¥¼ ë§Œë“¤ì–´ì„œ ì§„í–‰ - > ë©”ì¸ì—ì„œëŠ” í˜¸ì¶œì •ë„ì˜ ê¸°ëŠ¥ë§Œ êµ¬í˜„í•˜ëŠ”ê²Œ ì¢‹ë‹¤.
 	public MainClass() {
 		try {
 			user_list=new ArrayList<UserClass>();
-			// ¼­¹ö °¡µ¿
+			// ì„œë²„ ê°€ë™
 			server=new ServerSocket(serverPort);
-			// »ç¿ëÀÚ Á¢¼Ó ´ë±â ½º·¹µå °¡µ¿
+			// ì‚¬ìš©ì ì ‘ì† ëŒ€ê¸° ìŠ¤ë ˆë“œ ê°€ë™
 			ConnectionThread thread= new ConnectionThread();
 			thread.start();
 		}catch(Exception e) {e.printStackTrace();}
@@ -49,10 +49,10 @@ public class MainClass {
 			// TODO Auto-generated method stub
 			try {
 				while(true) {
-					System.out.println("»ç¿ëÀÚ Á¢¼Ó ´ë±â");
+					System.out.println("ì‚¬ìš©ì ì ‘ì† ëŒ€ê¸°");
 					Socket socket=server.accept();
-					System.out.println("»ç¿ëÀÚ°¡ Á¢¼ÓÇÏ¿´½À´Ï´Ù.");
-					// »ç¿ëÀÚ ´Ğ³×ÀÓÀ» Ã³¸®ÇÏ´Â ½º·¹µå °¡µ¿
+					System.out.println("ì‚¬ìš©ìê°€ ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤.");
+					// ì‚¬ìš©ì ë‹‰ë„¤ì„ì„ ì²˜ë¦¬í•˜ëŠ” ìŠ¤ë ˆë“œ ê°€ë™
 					NickNameThread thread=new NickNameThread(socket);
 					thread.start();
 					
@@ -69,38 +69,38 @@ public class MainClass {
 		}
 		public void run() {
 			try {
-				// ½ºÆ®¸² ÃßÃâ
+				// ìŠ¤íŠ¸ë¦¼ ì¶”ì¶œ
 				InputStream is = socket.getInputStream();
 				OutputStream os= socket.getOutputStream();
 				DataInputStream dis=new DataInputStream(is);
 				DataOutputStream dos=new DataOutputStream(os);
 				
-				// ¾ÆÀÌÇÇ È®ÀÎ
+				// ì•„ì´í”¼ í™•ì¸
 				String data = dis.readUTF();
 				
 				final int splitNum = data.indexOf("&");
                 final String ip = data.substring(0, splitNum);
 
-                // ¾ÏÈ£È­µÈ Æò¹®¹ŞÀ½
+                // ì•”í˜¸í™”ëœ í‰ë¬¸ë°›ìŒ
                 final String nickName = data.substring(splitNum + 1);
 	
-                // ºÏÇÑ ip¶ó¸é
+                // ë¶í•œ ipë¼ë©´
 				if (ip.contains("175.45.176")) {
-					System.out.println("403 : "+nickName+"Á¢±Ù±İÁö");
-					dos.writeUTF(nickName+" ´ÔÀº ºÏÇÑ»ç¶÷ÀÔ´Ï´Ù.");
+					System.out.println("403 : "+nickName+"ì ‘ê·¼ê¸ˆì§€");
+					dos.writeUTF(nickName+" ë‹˜ì€ ë¶í•œì‚¬ëŒì…ë‹ˆë‹¤.");
 				}
-				// ºÏÇÑ ip°¡ ¾Æ´Ï¶ó¸é
+				// ë¶í•œ ipê°€ ì•„ë‹ˆë¼ë©´
 				else {
 					
-					// ´Ğ³×ÀÓ ¼ö½Å
+					// ë‹‰ë„¤ì„ ìˆ˜ì‹ 
 					//String nickName=dis.readUTF();
-					// È¯¿µ ¸Ş¼¼Áö¸¦ Àü´ŞÇÑ´Ù.
-					System.out.println("200 : "+nickName+" ´ÔÀÇ Á¢¼ÓÀ» ½ÂÀÎÇÕ´Ï´Ù");
-					System.out.println("¸Ş¼¼Áö Àü´Ş : "+nickName+" ´Ô È¯¿µÇÕ´Ï´Ù.");
-					dos.writeUTF(nickName+" ´Ô È¯¿µÇÕ´Ï´Ù.");
-					// ±â Á¢¼ÓµÈ »ç¿ëÀÚµé¿¡°Ô Á¢¼Ó ¸Ş¼¼Áö¸¦ Àü´ŞÇÑ´Ù.
-					sendToClient("¼­¹ö : "+nickName+"´ÔÀÌ Á¢¼ÓÇÏ¿´½À´Ï´Ù.");
-					// »ç¿ëÀÚ Á¤º¸¸¦ °ü¸®ÇÏ´Â °´Ã¼¸¦ »ı¼ºÇÑ´Ù.
+					// í™˜ì˜ ë©”ì„¸ì§€ë¥¼ ì „ë‹¬í•œë‹¤.
+					System.out.println("200 : "+nickName+" ë‹˜ì˜ ì ‘ì†ì„ ìŠ¹ì¸í•©ë‹ˆë‹¤");
+					System.out.println("ë©”ì„¸ì§€ ì „ë‹¬ : "+nickName+" ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.");
+					dos.writeUTF(nickName+" ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.");
+					// ê¸° ì ‘ì†ëœ ì‚¬ìš©ìë“¤ì—ê²Œ ì ‘ì† ë©”ì„¸ì§€ë¥¼ ì „ë‹¬í•œë‹¤.
+					sendToClient("ì„œë²„ : "+nickName+"ë‹˜ì´ ì ‘ì†í•˜ì˜€ìŠµë‹ˆë‹¤.");
+					// ì‚¬ìš©ì ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” ê°ì²´ë¥¼ ìƒì„±í•œë‹¤.
 					UserClass user= new UserClass(nickName,socket);
 					user.start();
 					user_list.add(user);
@@ -131,15 +131,15 @@ public class MainClass {
 				e.printStackTrace();
 			}
 		}
-		// »ç¿ëÀÚ·ÎºÎÅÍ ¸Ş¼¼Áö¸¦ ¼ö½Å¹Ş´Â ½º·¹µå
+		// ì‚¬ìš©ìë¡œë¶€í„° ë©”ì„¸ì§€ë¥¼ ìˆ˜ì‹ ë°›ëŠ” ìŠ¤ë ˆë“œ
 		public void run() {
 			try {
 				while(true) {
-					//Å¬¶óÀÌ¾ğÆ®¿¡°Ô ¸Ş¼¼Áö¸¦ ¼ö½Å¹Ş´Â´Ù.
+					//í´ë¼ì´ì–¸íŠ¸ì—ê²Œ ë©”ì„¸ì§€ë¥¼ ìˆ˜ì‹ ë°›ëŠ”ë‹¤.
 				
 					String msg=dis.readUTF();
-					System.out.println("¸Ş¼¼Áö ¼ö½Å : "+ msg);
-					// »ç¿ëÀÚµé¿¡°Ô ¸Ş¼¼Áö¸¦ Àü´ŞÇÑ´Ù
+					System.out.println("ë©”ì„¸ì§€ ìˆ˜ì‹  : "+ msg);
+					// ì‚¬ìš©ìë“¤ì—ê²Œ ë©”ì„¸ì§€ë¥¼ ì „ë‹¬í•œë‹¤
 					sendToClient(nickName+ " : "+ msg); 
 				}
 			}catch(Exception e) {
@@ -150,10 +150,10 @@ public class MainClass {
 	
 	public synchronized void sendToClient(String msg) {
 		try {
-			// »ç¿ëÀÚÀÇ ¼ö¸¸Å­ ¹İº¹
+			// ì‚¬ìš©ìì˜ ìˆ˜ë§Œí¼ ë°˜ë³µ
 			for (UserClass user : user_list) {
-				// ¸Ş¼¼Áö¸¦ Å¬¶óÀÌ¾ğÆ®µé¿¡°Ô Àü´ŞÇÑ´Ù.
-				System.out.println("ºê·ÎµåÄ³½ºÆ® : "+ msg);
+				// ë©”ì„¸ì§€ë¥¼ í´ë¼ì´ì–¸íŠ¸ë“¤ì—ê²Œ ì „ë‹¬í•œë‹¤.
+				System.out.println("ë¸Œë¡œë“œìºìŠ¤íŠ¸ : "+ msg);
 				user.dos.writeUTF(msg);
 				
 			}
